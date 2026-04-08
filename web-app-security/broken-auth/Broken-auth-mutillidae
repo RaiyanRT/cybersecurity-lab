@@ -49,7 +49,7 @@ As Bob logs in, his cookie will be intercepted by Burp Suite through the manual 
  
 ![Intercepted Cookie](assets/broken-auth-intercepted-cookie.png)
 
-As you can see, after forwarding the request, Burp Suite has successfully intercepted the session and cookies, allowing an attacker to see their username and password as well as another interesting piece of information... the UID. 
+As shown, after forwarding the request, Burp Suite successfully intercepted the HTTP traffic, revealing user credentials (username and password) within the login request, as well as session-related data including the UID parameter, which becomes very important for what comes next.
  
 ### Step 4: Manipulating the Cookie
  
@@ -58,7 +58,7 @@ Modified the cookie values in Burp Suite, changing the username and uid to match
  
 ![Manipulated Cookie](assets/broken-auth-manipulated-cookie.png)
 
-While Changing the values of the username and password, I actually discovered that it wasnt even necessary, all an attacker had to do after intercepting the session token is to change the UID, automatically giving you access to a registered account like Toby's.  
+While changing the username and password values, I realised it wasn’t even necessary - simply modifying the UID after intercepting the session token was enough to gain access to another account.
  
 ### Step 5: Confirming Account Takeover
  
@@ -67,16 +67,16 @@ The server accepted the modified cookie without any additional verification, gra
  
 ![Session Hijacked](assets/broken-auth-hijacked-session.png)
  
-### Step 7: Escalation — UID Enumeration
+### Step 6: Escalation — UID Enumeration
  
 Discovered that changing only the uid value (without knowing the username) was enough to access arbitrary accounts. By incrementing the uid to values like `11`, access was gained to accounts that were not created during this test — including pre-existing accounts on the system.
  
-This means an attacker could scroll through user IDs and access every account on the platform without knowing any credentials.
+This means an attacker could iterate through user IDs and access every account on the platform without knowing any credentials.
  
  
 ![UID Enumeration](assets/broken-auth-uid-enumeration.png)
 
-This is another account that I had not registered beforehand, completely accessible by just changing the UID to 11 (Unlucky Scotty Do).
+This is another account I hadn’t registered beforehand, but was still fully accessible just by changing the UID to 11 (unlucky Scotty Do).
 
  
 ## Findings
@@ -87,7 +87,42 @@ This is another account that I had not registered beforehand, completely accessi
 - **CVSS Base Score:** 9.0
 - **CVSS Overall Score:** 8.5
 - **Impact:** Complete account takeover of any user on the platform. An attacker does not need the target's username or password — only a valid uid value, which can be guessed by simply iterating through the numbers. This grants access to all user data and functionality associated with the compromised account.
- 
+
+
+## Real World Attack Scenario (Extra Research)
+
+In this lab, the attack was performed locally using Burp Suite, but in a real-world environment, an attacker would need a way to intercept another user’s traffic.
+
+One realistic scenario would be a shared or insecure network (e.g. public Wi-Fi). An attacker could perform an ARP spoofing attack using tools such as Ettercap or Bettercap to position themselves as a man-in-the-middle between the victim and the server.
+
+Once in this position, the attacker could:
+
+- Intercept HTTP login requests and capture user credentials
+- Capture or modify session cookies in transit
+- Manipulate the uid value in the cookie to impersonate other users
+
+Because the application does not use secure session handling or encryption, this attack could be performed without needing direct access to the victim’s machine.
+
+## What a User Can Do (Extra Research)
+
+While this vulnerability ultimately needs to be fixed on the server side, there are still a few things users can do to reduce their risk:
+
+**1. Use HTTPS whenever possible**
+
+Always check that the site is using HTTPS instead of HTTP. HTTPS encrypts traffic, preventing attackers from easily intercepting login credentials or session cookies.
+
+**2. Avoid untrusted or public Wi-Fi networks**
+
+On open networks, attackers can perform man-in-the-middle attacks to intercept traffic between the user and the server.
+
+**3. Use a VPN on insecure networks**
+
+A VPN encrypts your traffic between your device and the VPN server, making it much harder for attackers on the same network to capture sensitive data.
+
+**4. Log out after using web applications**
+
+This helps ensure session tokens are invalidated and cannot be reused.
+
 ## Remediation
  
 **1. Use secure, random session tokens**
