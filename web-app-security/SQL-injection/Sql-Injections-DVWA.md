@@ -307,6 +307,35 @@ If this returns something like `root@localhost`, the web application has full ad
 
 As shown, the current database user is dvwauser@localhost. Since this user is not a root user, it means that it is some sort of limited user account rather than a root account. While this is a positive and there is some level of privelege restriction in place, it still has enough access to read all user credentials as shown in the previous attacks. 
 
-
+- **Vulnerability:** SQL Injection
+- **Location:** DVWA User ID input field
+- **Severity:** Critical
+- **Impact:** An attacker can systematically extract the entire database structure, dump all user credentials, and identify the privilege level of the database connection. If the database user has write privileges, data modification and deletion are also possible.
+ 
+## Remediation
+ 
+**1. Use parameterised queries (prepared statements)**
+ 
+Instead of adding user input directly into the SQL string, use parameterised queries that keep data separate from code. Such as:
+ 
+```php
+// Secure (parameterised query)
+$stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = :id");
+$stmt->execute(['id' => $id]);
+```
+ 
+This ensures that user input is always treated as data, never as executable SQL.
+ 
+**2. Validate and sanitise user input**
+ 
+Restrict the User ID field to accept only integers. Reject any input containing special characters like quotes, dashes, or logical operators before it reaches the database.
+ 
+**3. Apply the principle of least privilege**
+ 
+The database account used by the web application should only have SELECT access to the specific tables it needs — not INSERT, UPDATE, DELETE, or administrative privileges. 
+ 
+**4. Hash passwords with strong algorithms**
+ 
+Even if an attacker extracts password hashes, using a strong hashing algorithm like bcrypt with a unique salt per password makes cracking significantly harder. MD5 and SHA1 hashes (which DVWA uses) can be cracked quickly with the right tools. 
 
 
