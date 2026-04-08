@@ -21,7 +21,7 @@ Test the DVWA "SQL Injection" module using injection techniques — from basic d
 
 ## Information
 
-An SQL injection occurs when an application passes a user input directily into an SQL query. If the input field does not filter out special characters such as quotes or logical SQL operators, attackers can use these inputs to return data that they shouldn't have access to. They could even potentially also add, modify or delete data records completly.
+An SQL injection occurs when an application passes a user input directly into an SQL query. If the input field does not filter out special characters such as quotes or logical SQL operators, attackers can use these inputs to return data that they shouldn't have access to. They could even potentially also add, modify or delete data records completely.
 
 DVWA's SQL Injection module can simulate this by providing a simple "User ID" lookup form that is backed by a database query. The original query that is running behind the form should look like:
 
@@ -41,7 +41,7 @@ All injections bellow takes advantage of the 'input' portion of the code and app
 
 1 - A valid User ID which allows the first part of the query to work normally
 
-' = This single quote ends the quote that the applicaiton opened since the query looks like WHERE user_id = '$input'. This single quote replaces the final quote in the input early, meaning anything typed after is treated as sql code.
+' = This single quote ends the quote that the application opened since the query looks like WHERE user_id = '$input'. This single quote replaces the final quote in the input early, meaning anything typed after is treated as sql code.
 
 OR - An SQL logic operator which tells the query if either the left or right side is true
 
@@ -312,6 +312,32 @@ As shown, the current database user is dvwauser@localhost. Since this user is no
 - **Severity:** Critical
 - **Impact:** An attacker can systematically extract the entire database structure, dump all user credentials, and identify the privilege level of the database connection. If the database user has write privileges, data modification and deletion are also possible.
  
+## Attack Path Summary
+
+1. Confirm SQL Injection via boolean-based payload (`OR 1=1`)
+2. Determine column count using `ORDER BY`
+3. Identify injectable columns using `UNION SELECT`
+4. Extract database version (`version()`)
+5. Identify current database (`database()`)
+6. Enumerate tables via `information_schema.tables`
+7. Enumerate columns via `information_schema.columns`
+8. Extract credentials from `users` table
+9. Identify database user privileges (`current_user()`)
+
+## Finding: SQL Injection in User ID Parameter
+
+**Type:** Injection  
+**OWASP Category:** A03:2021 – Injection  
+**CVSS (Estimated):** 9.8 (Critical)
+
+**Impact:**
+- Full database disclosure (PII exposure)
+- Credential compromise → account takeover
+- Potential lateral movement if credentials are reused
+- Risk of database tampering if write permissions exist
+- Possible escalation to full server compromise depending on DB privileges
+
+
 ## Remediation
  
 **1. Use parameterised queries (prepared statements)**
