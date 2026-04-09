@@ -1,3 +1,5 @@
+[Back to README](../README.md)
+
 # Reconnaissance & Information Gathering — Metasploitable 2
 
 ## Objective
@@ -209,3 +211,6 @@ Audit all directories on the server and remove anything that doesn't need to be 
 **5. Implement rate limiting and blocking for scanning tools**
 
 Tools like Nikto and DIRB generate hundreds of requests in seconds. Implementing rate limiting or using a web application firewall (WAF) can detect and block automated scanning attempts.
+
+[Back to README](../README.md)
+
