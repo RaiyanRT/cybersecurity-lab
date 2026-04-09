@@ -29,7 +29,7 @@ It abuses the trust a user's browser places in the website. If a browser receive
 
 **Stored XSS** — The malicious script is saved on the server (in a database, comment field, guestbook, etc.). Every user who visits the affected page will have the script execute in their browser automatically. This is more dangerous than reflected XSS because the attacker doesn't need to trick each victim into clicking a link.
 
-**DOM-based XSS** — The vulnerability exists entirely in client-side JavaScript. The page's own scripts read user input (from the URL, for example) and write it into the page without sanitisation. The server never sees the malicious input — everything happens in the browser.
+**DOM(Document Object Model)-based XSS** — The vulnerability exists entirely in client-side JavaScript. The page's own scripts read user input (from the URL, for example) and write it into the page without sanitisation. The server never sees the malicious input — everything happens in the browser.
 
 ## Reflected XSS
 
@@ -64,7 +64,7 @@ The browser doesn't know that this script came from user input - it just execute
 > 📸 *Screenshot: Alert box appearing on the reflected XSS page after entering the script payload*
 ![Reflected XSS Page](assets/XSS-DVWA-01.png)
 
-This confirms the input field is vulnerable to reflected XSS. The `alert()` is harmless, but it proves that arbitrary JavaScript can be executed.
+This confirms the input field is vulnerable to reflected XSS. The `alert()` is harmless, but it proves that JavaScript can be executed into the field.
 
 ### Attack 2: Cookie Theft via Reflected XSS
 
@@ -120,7 +120,7 @@ Combined with some of the techniques from the [Broken Authentication writeup](..
 
 ### Why Reflected XSS Requires Social Engineering
 
-Unlike stored XSS, the payload is not saved on the server. The script only fires when someone visits the crafted URL. This means the attacker needs to convince the victim to click a link — through phishing emails, messages, or malicious advertisements. This makes reflected XSS less dangerous than stored XSS, but it is still heavily exploited in the real world because people click links.
+Unlike stored XSS, the payload is not saved on the server. The script only fires when someone visits the crafted URL. This means the attacker needs to convince the victim to click a link — through phishing emails, messages, or malicious advertisements. This makes reflected XSS less dangerous than stored XSS, but it is still heavily exploited in the real world because many people can unknowingly click compromised links.
 
 ## Stored XSS
 
@@ -135,7 +135,7 @@ There is no sanitisation on input or output — whatever is submitted gets store
 
 ### Attack 3: Stored Alert — Proof of Concept
 
-**Name field:** `Attacker`  
+**Name field:** `Literally Anything`  
 **Message field:**
 
 ```html
@@ -148,9 +148,12 @@ The script is saved into the guestbook database. Now, every single user who visi
 
 **Result:**
 
-> 📸 *Screenshot: The guestbook submission form with the script entered in the message field*
 
-> 📸 *Screenshot: The alert box appearing when revisiting the guestbook page*
+![Guestbook Basic Script](assets/XSS-DVWA-04.png)
+
+
+![Guestbook Alert Box](assets/XSS-DVWA-05.png)
+
 
 ### Attack 4: Persistent Cookie Theft
 
@@ -174,21 +177,34 @@ The script is saved to the database. Every user who visits the guestbook — inc
 
 **Result:**
 
-> 📸 *Screenshot: The guestbook page displaying normally (the script is invisible because it renders as code, not text)*
+![Changing Max Length](assets/XSS-DVWA-MaxLength.png)
+
+Before entering the payload into the page, there was a character limit on both of the fields. To go past this, I used inspector tools to change the max lenght of the input field to 500. 
+
+![Inserting Script Into GuestBook](assets/XSS-DVWA-06.png)
+
+Once the code is inserted anyone who accesses the guestbook will be compromised
+
+![GuestBook With Nothing Happening](assets/XSS-DVWA-07.png)
+
+When the user enters the Guestbook, it will look completely normal (not even a different url) as the script itself is invisible and renders as just code.
 
 > 📸 *Screenshot: The Kali listener showing multiple captured cookies from different users visiting the guestbook*
 
+![GuestBook With Nothing Happening](assets/XSS-DVWA-08.png)
+
+The Kali listener will capture the cookies from any user that visits the guestbook.
+
 This is significantly more dangerous than reflected XSS. The attacker injects the payload once and it harvests cookies from every visitor indefinitely.
 
-### Attack 5: Page Defacement
-
+### Attack 5: Altering the Page
 Cookie theft happens invisibly. To demonstrate a more visible impact, stored XSS can also be used to completely alter what a page looks like for other users.
 
-**Name field:** `Admin`  
+**Name field:** `Anything literally` 
 **Message field:**
 
 ```html
-<script>document.body.innerHTML='<h1 style="color:red;text-align:center;margin-top:200px;">This site has been compromised.</h1>';</script>
+<script>document.body.innerHTML='<h1 style="color:red;text-align:center;margin-top:200px;">This site has been compromised hahahaha.</h1>';</script>
 ```
 
 **What Happens:**
@@ -199,7 +215,11 @@ In the real world, defacement is used by hacktivists to make a public statement,
 
 **Result:**
 
-> 📸 *Screenshot: The guestbook page showing the defacement message instead of normal content*
+![Altering the Page Script](assets/XSS-DVWA-09.png)
+
+**Note:** Before adding the script I used inspector tools to once again increase the max character lenght of one of the fields. 
+
+![Altered Page](assets/XSS-DVWA-10.png)
 
 ## DOM-Based XSS
 
@@ -223,19 +243,23 @@ http://<target-ip>/dvwa/vulnerabilities/xss_d/?default=<script>alert('DOM XSS')<
 
 **What Happens:**
 
-The page's JavaScript reads the `default` parameter from the URL, and passes it directly into `document.write()`. The browser executes the injected script.
+The page's JavaScript reads the default parameter from the URL, and passes it directly into `document.write()`. The browser executes the injected script.
 
 The key difference from reflected XSS: the server never processes the malicious input. If you inspect the server's HTTP response, the payload won't appear anywhere in it. The vulnerability exists entirely in the client-side JavaScript that unsafely handles the URL parameter.
 
 **Why This Matters:**
 
-DOM-based XSS is harder to detect with traditional server-side security tools (like WAFs or server log analysis) because the malicious payload never touches the server. The attack happens entirely within the browser's JavaScript execution context.
+DOM-based XSS is harder to detect with traditional server-side security tools because the malicious payload does not touch the server. The attack happens entirely within the browser's JavaScript execution context.
 
 **Result:**
 
-> 📸 *Screenshot: The URL bar showing the injected payload in the default parameter*
+
+![Altered Page](assets/XSS-DVWA-11.png)
+
 
 > 📸 *Screenshot: The alert box triggered by the DOM-based XSS*
+
+![Altered Page](assets/XSS-DVWA-12.png)
 
 ## Attack Summary
 
@@ -252,7 +276,7 @@ DOM-based XSS is harder to detect with traditional server-side security tools (l
 
 * **Vulnerability:** Cross-Site Scripting (Reflected, Stored, and DOM-based)
 * **Location:** DVWA XSS modules — name input field (reflected), guestbook form (stored), language selector URL parameter (DOM-based)
-* **Severity:** High
+* **CVSS (Estimated):** 9.4 (Critical)
 * **OWASP Category:** A03:2021 – Injection
 
 **Impact:**

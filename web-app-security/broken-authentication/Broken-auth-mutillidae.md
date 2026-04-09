@@ -85,8 +85,7 @@ This is another account I hadn’t registered beforehand, but was still fully ac
 - **Vulnerability:** Broken Authentication & Weak Session Management
 - **Location:** Mutillidae session cookie handling
 - **Severity:** High
-- **CVSS Base Score:** 9.0
-- **CVSS Overall Score:** 8.5
+- **CVSS (Estimated):** 8.5
 - **Impact:** Complete account takeover of any user on the platform. An attacker does not need the target's username or password — only a valid uid value, which can be guessed by simply iterating through the numbers. This grants access to all user data and functionality associated with the compromised account.
 
 
