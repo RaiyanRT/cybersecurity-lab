@@ -13,6 +13,18 @@ This repository documents my hands-on cybersecurity work across two different en
 ![Lab Architecture](assets/lab-architecture.png)
 
 
+## Contents
 
+### Reconnaissance & Information Gathering
+- [Information Gathering — Metasploitable 2](reconnaissance/information-gathering-metasploitable.md)
+  - Tools: Nmap, WhatWeb, Nikto, DIRB, CeWL
 
+### Web Application Security
 
+**SQL Injection**
+- [SQL Injection — DVWA (Low Security)](web-app-security/SQL-injection/Sql-Injections-DVWA.md)
+  - OWASP: A03:2021
+
+**Broken Authentication**
+- [Broken Auth & Session Hijacking — Mutillidae](web-app-security/broken-authentication/Broken-auth-mutillidae.md)
+  - OWASP: A07:2021
