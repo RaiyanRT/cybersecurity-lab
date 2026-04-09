@@ -365,4 +365,5 @@ The database account used by the web application should only have SELECT access 
 
 Even if an attacker extracts password hashes, using a strong hashing algorithm like bcrypt with a unique salt per password makes cracking significantly harder. MD5 and SHA1 hashes (which DVWA uses) can be cracked quickly with the right tools.
 
+
 [Back to README](../../README.md)
