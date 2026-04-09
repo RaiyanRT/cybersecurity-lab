@@ -211,7 +211,7 @@ Cookie theft happens invisibly. To demonstrate a more visible impact, stored XSS
 
 `document.body.innerHTML=` replaces the entire page content with whatever HTML the attacker specifies. Every visitor to the guestbook will see the defacement message instead of the normal page.
 
-In the real world, defacement is used by hacktivists to make a public statement, or by attackers to damage a company's reputation.
+In the real world, altering pages are usually used by attackers to make a public statement or to damage a company's reputation.
 
 **Result:**
 
@@ -297,7 +297,7 @@ The cookie theft demonstrated in Attacks 2 and 4 connects directly to the sessio
 3. The attacker uses the stolen cookie to impersonate the victim (Session Hijacking)
 4. If the victim is an administrator, the attacker now has admin access
 
-This is how XSS, despite not directly touching the database, can lead to a full compromise. The XSS is the delivery mechanism; the session hijacking is the payload.
+This is how XSS, despite not directly touching the database, can lead to a full compromise. 
 
 ## Remediation
 
@@ -306,9 +306,6 @@ This is how XSS, despite not directly touching the database, can lead to a full 
 Every piece of user-supplied data that is rendered in HTML must be encoded so that browsers treat it as text, not code. For example, `<` should become `&lt;` and `>` should become `&gt;`. In PHP:
 
 ```php
-// Insecure — renders raw HTML
-echo $userInput;
-
 // Secure — encodes special characters so they display as text
 echo htmlspecialchars($userInput, ENT_QUOTES, 'UTF-8');
 ```
