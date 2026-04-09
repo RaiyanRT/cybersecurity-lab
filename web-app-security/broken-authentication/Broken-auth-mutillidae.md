@@ -1,3 +1,5 @@
+[Back to README](../../README.md)
+
 # Broken Authentication & Session Hijacking — Mutillidae
 
 ## Objective
@@ -139,3 +141,5 @@ Never trust cookie values for identity. The server should maintain a session sto
 **4. Implement session expiry and invalidation**
 
 Sessions should expire after a period of inactivity and be fully invalidated on logout. This limits the window of opportunity for an attacker using a stolen or manipulated token.
+
+[Back to README](../../README.md)
