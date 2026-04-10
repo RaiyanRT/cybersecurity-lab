@@ -17,7 +17,7 @@ Test the DVWA web application for Cross-Site Scripting vulnerabilities across al
 **DVWA security level:** Low  
 **Network:** Isolated host-only network
 
-## WHat is XSS?
+## What is XSS?
 
 **XSS targets other users' browser:** the attacker injects client-side code (usually JavaScript) that executes in the context of another user's session. The victim is whoever views the page containing the injected script.
 
