@@ -112,7 +112,7 @@ During an incident, communication follows this chain:
 
 ## Common Incident Types and Initial Responses
 
- Incident Type | Description | Initial Response |
+| Incident Type | Description | Initial Response |
 | --- | --- | --- |
 | Malware / Ransomware | Malicious software infects a system, potentially encrypting files or exfiltrating data | Isolate the infected machine from the network immediately. Capture logs. Begin containment procedures. |
 | Denial of Service (DoS/DDoS) | System is flooded with traffic, causing downtime | Identify source IPs. Apply firewall rules to block malicious traffic. Coordinate with ISP if needed. |
