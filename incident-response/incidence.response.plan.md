@@ -21,7 +21,7 @@ The goal is to ensure when an incident happens, the damage is minimised as much 
 
 This plan follows the [NIST SP 800-61r3 Incident Response Framework](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf), which defines six phases:
 
-![NIST Incident Responce Lifecycle Diagram](assets/NISTSP80061r3.png)
+![NIST Incident Response Lifecycle Diagram](assets/NISTSP80061r3.png)
 
 **Govern**
 
@@ -66,11 +66,11 @@ In a real organisation, the IRT would consist of specialised personnel. For this
 
 **HR:** Staff-related aspects of incidents (e.g. Insider threats. disciplinary actions, etc.)
 
-**Communicaitons:** Internal Staff updates, external media handling, etc.
+**Communications:** Internal Staff updates, external media handling, etc.
 
 ## Communication Strategy
 
-### When to Activate the Incidence Response Team (IRT)
+### When to Activate the Incident Response Team (IRT)
 
 The IRT is activated when a cyber event is confirmed as a cyber incident.
 
@@ -85,7 +85,7 @@ During an incident, communication follows this chain:
 1. Blue Team Operator (Detects Incident)
 2. Incident Response Manager (Coordinates Response)
 3. Purple Team Coordinator + Red Team Operators
-4. Senior Managment (Strategic Decisions, resource allcoation)
+4. Senior Management (Strategic Decisions, resource allocation)
 5. Legal + HR + Communications
 
 ### External Communication
