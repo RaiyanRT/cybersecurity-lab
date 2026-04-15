@@ -134,3 +134,11 @@ During an incident, communication follows this chain:
 
 ## Practical Exercises (Coming Soon)
 
+This IRP is supported by two practical red team/blue team exercises that test detection and response capabilities using the home lab environment:
+
+1. **[Malware Simulation](simulations/malware-simulation.md)** — Simulating a malware download (EICAR test file) via browser and email, testing Wazuh detection and Windows Defender response
+2. **[DoS Attack Simulation](simulations/dos-attack-simulation.md)** — SYN flood attack using hping3, testing network monitoring and firewall-based containment
+
+Each exercise includes a **Runbook** (red team attack procedure) and a **Playbook** (blue team detection and response procedure following the NIST framework).
+
+[Back to README](../README.md)
