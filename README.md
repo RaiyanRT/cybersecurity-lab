@@ -29,6 +29,10 @@ This repository documents my hands-on cybersecurity work across two different en
 - [Broken Auth & Session Hijacking — Mutillidae](web-app-security/broken-authentication/Broken-auth-mutillidae.md)
   - OWASP: A07:2021
 
+**Cross-Site Scripting (XSS)**
+- [Cross-Site Scripting — DVWA](web-app-security/XSS/Cross-Site-Scripting-DVWA.md)
+  - Reflected, Stored & DOM-based XSS — OWASP: A03:2021
+
 ### Incident Response
 - [Incident Response Plan](incident-response/incident-response-plan.md)
   - Team structure, communication strategy, NIST framework
