@@ -31,11 +31,13 @@ This repository documents my hands-on cybersecurity work across two different en
 
 **Cross-Site Scripting (XSS)**
 - [Cross-Site Scripting — DVWA](web-app-security/XSS/Cross-Site-Scripting-DVWA.md)
-  - Reflected, Stored & DOM-based XSS — OWASP: A03:2021
+  - Reflected, Stored & DOM-based XSS
+    - OWASP: A03:2021
 
 ### Incident Response
 - [Incident Response Plan](incident-response/incident-response-plan.md)
   - Team structure, communication strategy, NIST framework
+
 - [Malware Simulation — EICAR Test File](incident-response/simulations/malware-simulation.md)
   - Red/Blue team exercise with Wazuh SIEM + Windows Defender
 - DoS Attack Simulation (Coming Soon)
