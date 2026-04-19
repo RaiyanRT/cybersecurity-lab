@@ -23,22 +23,22 @@ This repository documents my hands-on cybersecurity work across two different en
 
 **SQL Injection**
 - [SQL Injection — DVWA (Low Security)](web-app-security/SQL-injection/Sql-Injections-DVWA.md)
-  - OWASP: A03:2021
+  - OWASP: A05:2025 - Injection
 
 **Broken Authentication**
 - [Broken Auth & Session Hijacking — Mutillidae](web-app-security/broken-authentication/Broken-auth-mutillidae.md)
-  - OWASP: A07:2021
+  - OWASP: A07:2025 - Authentication Failures
 
 **Cross-Site Scripting (XSS)**
 - [Cross-Site Scripting — DVWA](web-app-security/XSS/Cross-Site-Scripting-DVWA.md)
-  - Reflected, Stored & DOM-based XSS - OWASP: A03:2021
+  - Reflected, Stored & DOM-based XSS - OWASP: A05:2025 – Injection
 
 ### Incident Response
 - [Incident Response Plan](incident-response/incident-response-plan.md)
-  - Team structure, communication strategy, NIST framework
-
+  - Team structure, communication strategy, NIST CSF 2.0 framework
 - [Malware Simulation — EICAR Test File](incident-response/simulations/malware-simulation.md)
   - Red/Blue team exercise with Wazuh SIEM + Windows Defender
-- DoS Attack Simulation (Coming Soon)
+- [DoS Attack Simulation — SYN Flood](incident-response/simulations/dos-attack-simulation.md)
+  - Red/Blue team exercise with hping3 + Wireshark
 
 **More Write-ups Coming Soon**
