@@ -83,7 +83,17 @@ Press `Ctrl+C` on the Kali terminal to stop hping3. Note the total number of pac
 
 ![The number of packets sent](assets/dos-5.png)
 
-As you can see 50156393 packets were sent to the windows 10 machine. 
+As you can see 5016393 packets were sent to the windows 10 machine. 
+
+## Playbook (Blue Team)
+ 
+### Phase 1: Preparation
+
+Before the exercise, verify that monitoring tools are ready:
+
+- Wireshark is installed on Windows 10 for local packet capture
+- Windows Firewall is enabled and accessible
+- Task Manager baseline has been recorded
 
 ### Phase 2: Detection & Analysis
  
@@ -92,9 +102,9 @@ As you can see 50156393 packets were sent to the windows 10 machine.
 In a production environment, a DoS attack might be noticed through:
 - Users reporting that services are slow or unreachable
 - Network monitoring tools alerting on unusual bandwidth spikes
-- SIEM alerts triggered by a high volume of connection attempts from a single source
+- SIEM alerts triggered by a high volume of connection attempts
 - System performance degradation visible in monitoring dashboards
-**In this lab:**
+
  
 **Wireshark analysis:**
  
@@ -105,6 +115,28 @@ tcp.flags.syn == 1 && ip.src == <kali-ip>
 ```
  
 This should show thousands of SYN packets with no corresponding ACK completions — a clear signature of a SYN flood.
+
+![The SYN packages sent](assets/dos-6.png)
+
+As you can see, thousands of SYN packets were recieved with no ACK packets corresponding with them, indicating the SYN flood attack. 
+
+**Identifying the attacker:**
+ 
+From the Wireshark capture or Wazuh, identify:
+- The source IP address of the attack
+- The target port
+- The volume of packets/connections
+
+From my lab:
+
+- Source IP: 192.168.56.101
+- Target Port: 80
+- Volume: 5016393 packets
+
+
+
+
+
 
 
 
